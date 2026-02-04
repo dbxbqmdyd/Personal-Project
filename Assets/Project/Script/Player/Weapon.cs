@@ -11,13 +11,13 @@ namespace Project.Player
     }
     public class Weapon : MonoBehaviour
     {
-        [Serialize] private float SRate = 0.45f; // 공격 간격
-        [Serialize] private float STimer = 0f; // 공격 타이머  나중에 SO처리할 생각도 해두기
-        [Serialize] private float GRate = 0.18f;
-        [Serialize] private float GTimer = 0f;
+        [SerializeField] private float SRate = 0.45f; // 공격 간격
+        [SerializeField] private float STimer = 0f; // 공격 타이머  나중에 SO처리할 생각도 해두기
+        [SerializeField] private float GRate = 0.18f;
+        [SerializeField] private float GTimer = 0f;
         float timer;
 
-        [Serialize] private WeaponType wT;
+        [SerializeField] private WeaponType wT;
 
         public void WeaponInput(bool sword, bool gun)
         {
@@ -29,13 +29,17 @@ namespace Project.Player
                     break;
                 case WeaponType.Hold:
                     if (gun)
-                        Attack(); // 임시
+                        Attack2(); // 임시
                     break;
             }
         }
         private void Attack()
         {
-            Debug.Log($"공격");
+            Debug.Log($"클릭공격");
+        }
+        private void Attack2()
+        {
+            Debug.Log($"홀드공격");
         }
         void Start()
         {
