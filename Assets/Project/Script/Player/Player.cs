@@ -30,13 +30,14 @@ namespace Project.Player
         [SerializeField] private float attackCdT = 0f;
 
 
-        
+
 
 
         private float dashSpeed = 11f;
         private float dashT = 0.25f;
 
         private bool isDashing;
+        private bool isDashCd; // 대시쿨용
         private bool isInvincible; // 무적 상태 여부
 
         public Weapon weapon;
@@ -105,6 +106,7 @@ namespace Project.Player
             StartCoroutine(DashCo(dir));
         }
         */
+        /*
         public void Dash()
         {
             Vector3 mousePos = Input.mousePosition;
@@ -133,6 +135,59 @@ namespace Project.Player
             isDashing = false;
             currentState = PlayerState.Idle;
         }
+        */
+
+        public void DashInput()
+        {
+            if (!Input.GetMouseButtonDown(1)) return;
+            if (isDashing || isDashCd) return;
+            if (WASD().sqrMagnitude < 0.01f)
+            {
+                ChangeState(PlayerState.Idle);
+                return;
+            }
+
+            ChangeState(PlayerState.Dash);
+            StartCoroutine(DashCo(WASD()));
+        }
+        /*
+        public void Dash()
+        {
+            Vector2 inputDir = WASD();
+
+            if (inputDir.sqrMagnitude < 0.01f)
+            {
+                ChangeState(PlayerState.Idle);
+                return;
+            }
+
+            StartCoroutine(DashCo(inputDir));
+        }
+        */
+        IEnumerator DashCo(Vector2 dir)
+        {
+            isDashing = true;
+            isDashCd = true;
+            isInvincible = true;
+
+            float timer = 0f;
+
+            while (timer < dashT)
+            {
+                rb.velocity = dir * dashSpeed;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            rb.velocity = Vector2.zero;
+            isDashing = false;
+            isInvincible = false;
+
+            ChangeState(PlayerState.Idle);
+            yield return new WaitForSeconds(0.15f); // 대시 쿨타임
+            isDashCd = false;
+
+        }
         public void TestTK()// 조준선 느낌으로 사용이 가능할듯
         {
             Vector3 mousePos = Input.mousePosition; // 마우스 위치를 가져옴
@@ -141,22 +196,34 @@ namespace Project.Player
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); // 화면좌표를 월드좌표로 변환
             transform.position = worldPos; //오브젝트위치를 마우스위치로
         }
+
+        
         void Update() // 입력만 여기로
         {
-            
+            if (isInvincible)
+            {
+                Debug.Log("무적 상태");
+            }
 
             bool isSword = Input.GetMouseButtonDown(0);
             bool isGun = Input.GetMouseButton(0);
 
             weapon.WeaponInput(isSword, isGun);
             //MouseTracking();
-            if (Input.GetMouseButtonDown(1) && !isDashing)
+            /*
+            if (Input.GetMouseButtonDown(1) && !isDashing && !isDashCd)
             {
-                ChangeState(PlayerState.Dash);
-                Dash();
-            }
+                if (WASD().sqrMagnitude > 0f)
+                {
+                    ChangeState(PlayerState.Dash);
+                    Dash();
+                }
 
-                switch (currentState)
+            }
+            */
+
+            DashInput();
+            switch (currentState)
             {
                 case PlayerState.Idle:
                     if (WASD().sqrMagnitude > 0f)
