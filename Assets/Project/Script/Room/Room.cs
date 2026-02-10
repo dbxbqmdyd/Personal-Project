@@ -6,39 +6,48 @@ namespace Project.Room
 
     public class Room : MonoBehaviour
     {
-        [SerializeField] private Door[] doors;
-        [SerializeField] private bool isActiveRoom = false;
-        [SerializeField] private bool isClearRoom = false;
+        public Door[] doors;
+        public Monster.Monster[] monsters;
+
+        bool isCleared = false;
+        bool isActivated = false;
+
         [SerializeField] private LayerMask playerMask;
 
+        public void EnterRoom()
+        {
+            LockDoors();
+            ActivateMonsters();
+        }
 
-        private bool LayerCheck(Collider2D col)
+        void LockDoors()
         {
-            return ((1 << col.gameObject.layer) & playerMask) != 0;
+            foreach (var door in doors)
+                door.LockDoor();
         }
-        private bool ActiveCheck()
+
+        void ActivateMonsters()
         {
-            return !isActiveRoom && !isClearRoom;
+            foreach (var m in monsters)
+                m.Activate();
         }
-        private void OnTriggerEnter2D(Collider2D col)
+
+        public void CheckRoomClear()
         {
-            if(LayerCheck(col) && ActiveCheck())
+            foreach (var m in monsters)
             {
-
+                if (!m.IsDead)
+                    return;
             }
+
+            ClearRoom();
         }
 
-
-
-
-        void Start()
+        void ClearRoom()
         {
-
-        }
-
-        void Update()
-        {
-
+            isCleared = true;
+            foreach (var door in doors)
+                door.UnlockDoor();
         }
     }
 }

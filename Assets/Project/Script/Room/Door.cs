@@ -6,20 +6,27 @@ namespace Project.Room
     public class Door : MonoBehaviour
     {
         private Collider2D doorCol;
-        private SpriteRenderer SpriteRenderer;
+        private SpriteRenderer spriteRenderer;
 
-        [SerializeField] private bool isOpen = true;
+        [SerializeField] private bool isLock = false;
 
-
-
-        private void Awake()
+        
+        public void UnlockDoor()
         {
-            
+            isLock = false;
+            doorCol.enabled = false; // ¿­¸° ¹®
+            spriteRenderer.color = Color.green;
         }
-
+        public void LockDoor()
+        {
+            isLock = true;
+            doorCol.enabled = true; // ´ÝÈù ¹®
+            spriteRenderer.color = Color.red;
+        }
         void Start()
         {
-
+            doorCol = GetComponent<Collider2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         void Update()

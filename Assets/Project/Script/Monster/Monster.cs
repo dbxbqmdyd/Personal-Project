@@ -22,12 +22,22 @@ namespace Project.Monster
         private float attackRange = 5f;   // 공격 범위
         private float moveSpeed = 3f;
         MonsterState currentState;
+
+
+        private bool isDead = false;
+        public bool IsDead => isDead; //람다
         void Start()
         {
             currentState = MonsterState.Idle;
         }
 
+        public void Activate()
+        {
+            gameObject.SetActive(true); 
+            currentState = MonsterState.Move; // 상태 변경
+            Debug.Log($"{gameObject.name} 활성화!");
 
+        }
 
         void Update()
         {
