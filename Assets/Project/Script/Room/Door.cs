@@ -31,7 +31,14 @@ namespace Project.Room
 
         void Update()
         {
-
+            if (isLock)
+            {
+                LockDoor();
+                // 문 잠김 상태 처리
+            }
+            else {                 UnlockDoor();
+                // 문 열림 상태 처리
+            }
         }
     }
 }

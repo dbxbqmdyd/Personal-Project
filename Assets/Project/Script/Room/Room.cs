@@ -14,8 +14,31 @@ namespace Project.Room
 
         [SerializeField] private LayerMask playerMask;
 
+        [SerializeField] private Monster.MonsterSpawner spawner;
+
+        private void Start()
+        {
+            monsters = spawner.SpawnMonsters();
+        }
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (IsPlayer(col) && CanActivate())
+            {
+                EnterRoom();
+            }
+        }
+        private bool IsPlayer(Collider2D col)
+        {
+            return ((1 << col.gameObject.layer) & playerMask) != 0;
+        }
+
+        private bool CanActivate()
+        {
+            return !isActivated && !isCleared;
+        }
         public void EnterRoom()
         {
+            isActivated = true;
             LockDoors();
             ActivateMonsters();
         }
@@ -48,6 +71,8 @@ namespace Project.Room
             isCleared = true;
             foreach (var door in doors)
                 door.UnlockDoor();
+
+            Debug.Log("Room Cleared!" ); // 확인하ㅗ 지우자
         }
     }
 }
