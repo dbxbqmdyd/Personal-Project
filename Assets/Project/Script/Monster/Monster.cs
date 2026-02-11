@@ -24,8 +24,8 @@ namespace Project.Monster
         [SerializeField] private float detectRange = 10f;  // 플레이어 감지 범위
         [SerializeField] private float attackRange = 5f;   // 공격 범위
         [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private int maxHp = 100;
-        private int currentHp;
+        [SerializeField] private int maxHp = 100; //임시
+        private int currentHp; 
 
         [SerializeField] private LayerMask wallMask;
         [SerializeField] private float wallCheckDiis = 1f;
@@ -41,12 +41,12 @@ namespace Project.Monster
         public event Action<Monster> OnDead;
         void Start()
         {
-            currentHp = maxHp;
+            currentHp = maxHp; 
 
             rb = GetComponent<Rigidbody2D>();
             currentState = MonsterState.Idle;
 
-            if(playerTF == null)
+            if(playerTF == null) // 레이어?
             {
 
             }

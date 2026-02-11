@@ -27,10 +27,12 @@ namespace Project.Room
         {
             doorCol = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            doorCol.enabled = false;
         }
 
         void Update()
         {
+            /*
             if (isLock)
             {
                 LockDoor();
@@ -39,6 +41,7 @@ namespace Project.Room
             else {                 UnlockDoor();
                 // 문 열림 상태 처리
             }
+            */
         }
     }
 }

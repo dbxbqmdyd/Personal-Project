@@ -76,8 +76,8 @@ namespace Project.Player
         public void Move()
         {
             Vector2 input = WASD();
-            rb.velocity = input * 5f;
-        } // 변수 바꾸기 스피드
+            rb.velocity = input * 5f; // 변수 바꾸기 스피드
+        } 
         public void Stop()
         {
             rb.velocity = Vector2.zero;

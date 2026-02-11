@@ -7,7 +7,7 @@ namespace Project.Room
     public class Room : MonoBehaviour
     {
         public Door[] doors;
-        public Monster.Monster[] monsters;
+        public Monster.Monster[] monsters; // 둘중 하나 지우기
 
         bool isCleared = false;
         bool isActivated = false;
@@ -20,7 +20,7 @@ namespace Project.Room
         {
             monsters = spawner.SpawnMonsters();
         }
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnTriggerEnter2D(Collider2D col) // OnTriggerExit2D 대신 깔짝방식을 해버리면 불상사가 발생함 다른 방식을 생각해보기
         {
             if (IsPlayer(col) && CanActivate())
             {
@@ -59,8 +59,7 @@ namespace Project.Room
         {
             foreach (var m in monsters)
             {
-                if (!m.IsDead)
-                    return;
+                if (!m.IsDead) return;
             }
 
             ClearRoom();
