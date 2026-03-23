@@ -26,11 +26,10 @@ public class Test : MonoBehaviour
 
         Vector3 viewPos = Camera.main.ScreenToViewportPoint(mousePos);
 
-        viewPos.x = Mathf.Clamp(viewPos.x, 0f, 1f); // 나중에 조준선이랑 맞추면 될듯
-        viewPos.y = Mathf.Clamp(viewPos.y, 0.02f, 0.98f);
+        viewPos.x = Mathf.Clamp(viewPos.x, 0.013f, 0.987f); // 나중에 조준선이랑 맞추면 될듯
+        viewPos.y = Mathf.Clamp(viewPos.y, 0.028f, 0.976f);
 
         Vector3 worldPos = Camera.main.ViewportToWorldPoint(new Vector3(viewPos.x, viewPos.y, 10f)); ;
-        worldPos.z = 0f;
     
         transform.position = worldPos;
     }
