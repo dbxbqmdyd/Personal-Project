@@ -188,15 +188,6 @@ namespace Project.Player
             isDashCd = false;
 
         }
-        public void TestTK()// 조준선 느낌으로 사용이 가능할듯
-        {
-            Vector3 mousePos = Input.mousePosition; // 마우스 위치를 가져옴
-            mousePos.z = 10f; // 카메라 거리 조절용
-
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos); // 화면좌표를 월드좌표로 변환
-            transform.position = worldPos; //오브젝트위치를 마우스위치로
-        }
-
         
         void Update() // 입력만 여기로
         {
